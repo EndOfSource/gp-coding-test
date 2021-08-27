@@ -6,7 +6,7 @@ var router = express.Router();
 const getConnection = require('../database/mysql')
 
 router.post(
-  '/', 
+  '/addresses', 
   body('name').isString().isLength({max: 191}), // DB Field only has 191 chars
   body('address').exists(),
   body('address.address_line_1').exists().isString(),

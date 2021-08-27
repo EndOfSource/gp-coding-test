@@ -1,8 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import './App.css';
-import TextInput from './components/TextInput';
-import AddressTextInput from './components/AddressTextInput';
+import Modal from './components/Modal';
 import AddressForm from './components/AddressForm';
 
 class CustomerForm extends React.Component {
@@ -14,10 +13,14 @@ class CustomerForm extends React.Component {
       address_line_2: null,
       address_line_3: null,
       zip_code: null,
+      modal_show: false,
+      modal_title: null,
+      modal_text: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
   }
 
   handleChange(event) {
@@ -40,7 +43,23 @@ class CustomerForm extends React.Component {
       }
     }
 
-    axios.post('/api/addresses', payload).then(console.log).catch(console.log)
+    axios.post('/api/addresses', payload).then(() => {
+      this.setState({ 
+        modal_show: true, 
+        modal_title: "Success", 
+        modal_text: 'Record was successfully added to the database!'
+      })
+    }).catch(err => {
+      this.setState({ 
+        modal_show: true, 
+        modal_title: "Error", 
+        modal_text: err.message
+      })
+    })
+  }
+
+  onDismiss() {
+    this.setState({ modal_show : false})
   }
 
   render() {
@@ -49,6 +68,7 @@ class CustomerForm extends React.Component {
         <div class="card">
           <AddressForm data={this.state} onChange={this.handleChange} onSubmit={this.handleSubmit} />
         </div>
+        <Modal onDismiss={this.onDismiss} visible={this.state.modal_show} title={this.state.modal_title} text={this.state.modal_text} />
       </div>
     );
   }

@@ -23,11 +23,18 @@ router.post(
     const { name, address, zip_code } = req.body
 
     getConnection(function(err, conn){
+      if (err) {
+        return res.status(500).json({err: err.message})
+      }
+
       conn.query(
         "INSERT INTO customer_addresses (name, address, zip_code) VALUES (?, ?, ?)", 
       [name, JSON.stringify(address), zip_code], 
       function(err, rows) {
-        console.log(err)
+        if (err) {
+          return res.status(500).json({err: err.message})
+        }
+
         res.json(rows);
       })
     })

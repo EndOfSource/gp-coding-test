@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import './App.css';
 import Modal from './components/Modal';
 import AddressForm from './components/AddressForm';
 

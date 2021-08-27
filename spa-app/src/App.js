@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import './App.css';
 
 class CustomerForm extends React.Component {
@@ -24,8 +25,19 @@ class CustomerForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
     event.preventDefault();
+
+    const payload = {
+      name: this.state.name,
+      zip_code: this.state.zip_code,
+      address: {
+        address_line_1: this.state.address_line_1,
+        address_line_2: this.state.address_line_2,
+        address_line_3: this.state.address_line_3,
+      }
+    }
+
+    axios.post('/api/addresses', payload).then(console.log).catch(console.log)
   }
 
   render() {

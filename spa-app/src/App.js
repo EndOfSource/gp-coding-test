@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import './App.css';
+import TextInput from './components/TextInput';
+import AddressTextInput from './components/AddressTextInput';
 
 class CustomerForm extends React.Component {
   constructor(props) {
@@ -43,20 +45,9 @@ class CustomerForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input name="name" value={this.state.name} onChange={this.handleChange} />
-        </label>
-        <label>
-          Address:
-          <input name="address_line_1" value={this.state.address_line_1} onChange={this.handleChange} />
-          <input name="address_line_2" value={this.state.address_line_2} onChange={this.handleChange} />
-          <input name="address_line_3" value={this.state.address_line_3} onChange={this.handleChange} />
-        </label>
-        <label>
-          ZIP-Code:
-          <input name="zip_code" value={this.state.zip_code} onChange={this.handleChange} />
-        </label>
+        <TextInput name="name" label="Name" value={this.state.name} onChange={this.handleChange} />
+        <AddressTextInput name="address_line" label="Address" value={this.state} onChange={this.handleChange} />
+        <TextInput name="zip_code" label="ZIP-Code" value={this.state.zip_code}onChange={this.handleChange} />
         <input type="submit" value="Submit" />
       </form>
     );
